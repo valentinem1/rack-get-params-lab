@@ -16,10 +16,21 @@ class Application
       resp.write handle_search(search_term)
     else
       resp.write "Path Not Found"
+      resp.write "Your cart is empty"
+      resp.write "We don't have that item"
     end
 
     if req.path.match(/cart/)
-      
+      @@cart.each do |cart|
+        resp.write "#{cart}\n"
+      end
+    end
+
+    if req.path.match(/add/)
+      @@items.each do |item|
+        resp.write @@cart << item
+        resp.write "added #{item}\n"
+      end
     end
 
     resp.finish
